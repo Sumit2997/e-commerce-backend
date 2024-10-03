@@ -19,7 +19,6 @@ const getSingleProduct = async (req, res) => {
     throw new CustomError.NotFoundError(`Not fount product with id:${id}`);
   }
   res.status(StatusCodes.OK).json({ product });
-  res.send("get single product");
 };
 const updateProduct = async (req, res) => {
   const { id: productId } = req.params;
