@@ -1,6 +1,6 @@
-const mongoose = require(mongoose);
+const mongoose = require("mongoose");
 
-const ReviewSchema = mongoose.createSchema(
+const ReviewSchema = mongoose.Schema(
   {
     rating: {
       type: Number,
