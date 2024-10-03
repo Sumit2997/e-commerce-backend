@@ -25,11 +25,13 @@ const createReview = async (req, res) => {
   const review = await Review.create(req.body);
   res.status(StatusCodes.CREATED).json({ review });
 };
+
 const getAllReviews = async (req, res) => {
   const reviews = await Review.find({});
 
   res.status(StatusCodes.OK).json({ reviews, count: reviews.length });
 };
+
 const getSingleReview = async (req, res) => {
   const { id: reviewId } = req.params;
   const review = await Review.findOne({ _id: reviewId });
@@ -38,13 +40,25 @@ const getSingleReview = async (req, res) => {
     throw new CustomError.NotFoundError(`No review with id:${reviewId}`);
   }
 
-  res.status(StatusCodes.OK).json({review});
+  res.status(StatusCodes.OK).json({ review });
 };
+
 const updateReview = async (req, res) => {
   res.send("update review");
 };
+
 const deleteReview = async (req, res) => {
-  res.send("delete review");
+  const { id: reviewId } = req.params;
+
+  const review = await Review.findOne({ _id: reviewId });
+  if (!review) {
+    throw new CustomError.BadRequestError(`No review with id:${reviewId}`);
+  }
+
+  checkPermissions(req.user, review.user);
+  await review.remove();
+
+  res.status(StatusCodes.OK).json({ msg: `Success! Review removed.` });
 };
 
 module.exports = {
