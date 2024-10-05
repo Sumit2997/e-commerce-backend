@@ -10,7 +10,7 @@ const {
   getCurrentUserOrders,
   createOrder,
   updateOrder,
-} = require("../controllers/reviewController");
+} = require("../controllers/orderController");
 
 router
   .route("/")
